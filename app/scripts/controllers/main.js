@@ -2,9 +2,23 @@
 
 angular.module('gohackerApp')
   .controller('MainCtrl', function ($scope) {
-    $scope.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
+
+
+  	/**
+  	 * The map objects
+  	 */
+  	$scope.map = {
+	    center: {
+	        latitude: 45, //todo pull in live geocode
+	        longitude: -73 
+	    },
+	    zoom: 8,
+	    draggable: "true",
+	    options: false,
+	    bounds: false
+	};
+
+
+
+
   });
