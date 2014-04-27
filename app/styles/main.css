@@ -43,7 +43,7 @@ body {
 
 @media (min-width: 768px) {
   .container {
-    
+
   }
 }
 .container-narrow > hr {
@@ -90,13 +90,13 @@ body {
 
 
 html, body {
-  width: 100%; 
+  width: 100%;
   height: 100%;
-  margin: 0; 
+  margin: 0;
   padding: 0;
 }
 
-.angular-google-map-container { 
+.angular-google-map-container {
   top   : 0;
   left  : 0;
   right : 0;
@@ -108,5 +108,28 @@ html, body {
 }
 
 .input-group.right{
-  padding-right: 15px; 
+  padding-right: 15px;
 }
+.input-group.left{
+  padding-left: 10px;
+}
+
+.navbar-nav{
+  padding-left: 15px;
+}
+
+.navbar-form{
+  border: none;
+}
+
+.navbar-toggle{
+  margin-top: 18px;
+  margin-left: 10px;
+}
+
+.glyphicon{
+  line-height: 1.45;
+  margin-top: -1px;
+}
+
+
