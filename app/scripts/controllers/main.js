@@ -33,4 +33,26 @@ angular.module('gohackerApp')
     })
 
 
+    $scope.goSearch = function(){
+      var query = $scope.query;
+      var gc = new google.maps.Geocoder();
+      var gcRequest = {};
+          gcRequest.location = new google.maps.LatLng($scope.position.latitude, $scope.position.longitude);
+          gcRequest.address = "Hackerspaces near "; // + $scope.position.latitude + ", " + $scope.position.longitude;
+
+      gc.geocode( gcRequest, function( ResultsArray, GeocoderStatus){
+        alert( ResultsArray);
+
+      } );
+
+
+      /*
+      var searcher = new spaceSearch();
+      var results = searcher.find( query );
+      alert( results );
+       */
+
+    }
+
+
   }]);
