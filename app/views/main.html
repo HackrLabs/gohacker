@@ -16,12 +16,12 @@
         </div>
 
         <!-- search form -->
-        <form class="navbar-form" ng-submit="goSearch();" role="search">
+        <form class="navbar-form" ng-submit="goSearch()" role="search">
             <div class="col-xs-8 pull-right">
               <div class="input-group right">
                 <input type="text" name="query" id="search-input" class="form-control search-input ng-bind" placeholder="{{geoString}}" />
                 <div class="input-group-btn">
-                  <button type="button" type="submit" class="btn btn-default glyphicon glyphicon-search">
+                  <button type="button" type="submit" ng-click="goSearch()" class="btn btn-default glyphicon glyphicon-search">
                     <span class="sr-only">Find</span></button>
                 </div><!-- /btn-group -->
               </div><!-- /input-group -->
