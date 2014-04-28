@@ -1,8 +1,11 @@
 'use strict';
 
 angular.module('gohackerApp')
-  .controller('MainCtrl', function ($scope, $rootScope) {
+  .controller('MainCtrl', [ '$scope', function ($scope, $rootScope) {
+
     $scope.position = {};
+    $scope.geoString = "Search 4 HakrSpaces";
+
     angular.extend($scope,
       { map:
         { control: {}
@@ -19,11 +22,15 @@ angular.module('gohackerApp')
         }
       }
     )
-    navigator.geolocation.getCurrentPosition(function(position){
-      $scope.position = position.coords
-      $scope.map.control.refresh($scope.position)
-      $scope.map.control.getGMap().setZoom(11)
-    }, function(error){
-      alert('Error occurred. Error code: ' + error.code)
+
+    navigator.geolocation.getCurrentPosition( function( position ){
+      $scope.position = position.coords;
+      $scope.geoString = position.coords.latitude + ", " + position.coords.longitude;
+      $scope.map.control.refresh( $scope.position )
+      $scope.map.control.getGMap().setZoom( 11 )
+    }, function( error ){
+      alert('Error occurred. Error code: ' + error.code )
     })
-  });
+
+
+  }]);
