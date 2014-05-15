@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('gohackerApp')
-  .controller('MainCtrl', [ '$scope', function ($scope, $rootScope) {
+  .controller('MainCtrl', function ($scope, $rootScope, Find) {
 
     $scope.position = {};
     $scope.geoString = "Search 4 HakrSpaces";
@@ -30,7 +30,14 @@ angular.module('gohackerApp')
       $scope.map.control.getGMap().setZoom( 11 )
     }, function( error ){
       alert('Error occurred. Error code: ' + error.code )
-    })
+    },
+     function(error){
+        console.error(error)
+     },
+     { enableHighAccuracy: true
+      , maximumAge: 7500
+     }
+    )
 
     /**
      * Searches a geocoder results array for the first object designated a 'locality'
@@ -55,7 +62,7 @@ angular.module('gohackerApp')
 
           //This produces 0 results.
           //gcRequest.address = "Hackerspaces";
-
+      /*
       gc.geocode( gcRequest, function( ResultsArray, GeocoderStatus){
 
         if ( GeocoderStatus == "OK" ){
@@ -66,16 +73,17 @@ angular.module('gohackerApp')
         }
 
       } );
+    */
 
-
-      /*
       //pseudo for API
-      var searcher = new spaceSearch();
-      var results = searcher.find( query );
-      alert( results );
-       */
-
+      Find.getSpace(query).then(function(res){
+        var data = res.data
+        if(data.status != 200)
+          alert('No Space Found')
+        else
+          $scope.spaces = data.spaces
+      })
     }
 
 
-  }]);
+  });

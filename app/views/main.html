@@ -12,17 +12,32 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand hidden-xs" href="#">HakrLabs:GoHakr</a>
+          <a class="navbar-brand hidden-xs" href="#">Go Hacker</a>
         </div>
 
         <!-- search form -->
         <form class="navbar-form" ng-submit="goSearch()" role="search">
             <div class="col-xs-8 pull-right">
               <div class="input-group right">
-                <input type="text" name="query" id="search-input" class="form-control search-input ng-bind" placeholder="{{geoString}}" />
+                <input
+                  type="text"
+                  name="query"
+                  id="search-input"
+                  class="form-control search-input ng-bind"
+                  placeholder="{{geoString}}"
+                  data-ng-model="query"
+                />
                 <div class="input-group-btn">
-                  <button type="button" type="submit" ng-click="goSearch()" class="btn btn-default glyphicon glyphicon-search">
-                    <span class="sr-only">Find</span></button>
+                  <button
+                    type="button"
+                    type="submit"
+                    ng-click="goSearch()"
+                    class="btn btn-default glyphicon glyphicon-search"
+                  >
+                    <span class="sr-only">
+                      Find
+                    </span>
+                  </button>
                 </div><!-- /btn-group -->
               </div><!-- /input-group -->
             </div><!-- /.col-xs-9 -->
@@ -51,6 +66,15 @@
   pan="true"
   control="map.control"
 >
+  <marker
+    coords='position'
+  >
+  </marker>
+  <marker
+    data-ng-repeat="space in spaces"
+    coords="space.coords"
+  >
+  </marker>
 </google-map>
 
 
