@@ -15,6 +15,41 @@ module.exports = function (grunt) {
   // Time how long tasks take. Can help when optimizing build times
   require('time-grunt')(grunt);
 
+  var os=require('os');
+  var ifaces=os.networkInterfaces();
+  var lookupIpAddress = null;
+  for (var dev in ifaces) {
+      ifaces[dev].forEach(function(details){
+        console.log(details)
+        if (details.family=='IPv4') {
+          lookupIpAddress = details.address;
+        }
+      });
+  }
+  var ipAddress = grunt.option('host') || lookupIpAddress;
+
+  var middleware = function (connect, options) {
+      if (!Array.isArray(options.base)) {
+        options.base = [options.base];
+      }
+
+      // Setup the proxy
+      var middlewares = [require('grunt-connect-proxy/lib/utils').proxyRequest];
+
+      // Serve static files.
+      options.base.forEach(function(base) {
+          middlewares.push(connect.static(base));
+      });
+
+      // Make directory browse-able.
+      var directory = options.directory || options.base[options.base.length - 1];
+      middlewares.push(connect.directory(directory));
+
+      return middlewares;
+    }
+
+
+
   // Define the configuration for all the tasks
   grunt.initConfig({
 
@@ -56,7 +91,9 @@ module.exports = function (grunt) {
         ]
       }
     },
-
+    exec: {
+      'api-serve': 'killall nodemon; nodemon api/server.js &'
+    },
     // The actual grunt server settings
     connect: {
       options: {
@@ -66,12 +103,23 @@ module.exports = function (grunt) {
         livereload: 35729
       },
       livereload: {
+        proxies:
+        { context: '/api'
+        , host: 'localhost'
+        , port: '2333'
+        , https: false
+        , changeOrigin: false
+        , xforward: false
+        , timeout: 99999999999
+        , ws: false
+        },
         options: {
           open: true,
           base: [
             '.tmp',
             '<%= yeoman.app %>'
           ]
+          , middleware: middleware
         }
       },
       test: {
@@ -333,8 +381,10 @@ module.exports = function (grunt) {
     grunt.task.run([
       'clean:server',
       'bower-install',
+      'exec:api-serve',
       'concurrent:server',
       'autoprefixer',
+      'configureProxies:livereload',
       'connect:livereload',
       'watch'
     ]);
