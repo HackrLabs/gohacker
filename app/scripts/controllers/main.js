@@ -3,17 +3,55 @@
 angular.module('gohackerApp')
   .controller('MainCtrl', function ($scope, $rootScope, Find) {
 
+    /**
+     * How many decimal places to useon the
+     * geo coords locations for the search string.
+     * @type {Number}
+     */
+    var GEO_COORD_ACCURACY = 6;
+
+    $scope.randomCoords = [ {'lat': 40.899304, 'lon': -73.948613 }
+                           ,{'lat': 57.136982, 'lon': -2.167791 } ];
+
+    /**
+     * Return a random coordinate from the randomCoords array.
+     * This could be fun...
+     * @return {[type]} [description]
+     */
+    var getRandomCoord = function(){
+      var idx = Math.floor( Math.random() * ( $scope.randomCoords.length-1 ) ) + 1;
+      return $scope.randomCoords[idx];
+    }
+
+    /**
+     * The position container
+     * @type {Object}
+     */
     $scope.position = {};
     $scope.position.icon = 'images/pin-blue-solid-3.png'
+
+    /**
+     * A String used in the Search params and the View input fields
+     * @type {String}
+     */
+>>>>>>> 9e4e297623fe567ac77aa0fe8c544b4a56c2cf6f
     $scope.geoString = "Search 4 HakrSpaces";
     $scope.spaces = [];
 
+
+    /**
+     * adding on some info for the map object
+     * @type {Object}
+     *
+     * supplies default coords of: 35.1234,-100.1234
+     */
+    var rndCoord = getRandomCoord();
     angular.extend($scope,
       { map:
         { control: {}
         , center:
-          { latitude: $scope.position.latitude || 35
-          , longitude: $scope.position.longitude || -100
+          { latitude: $scope.position.latitude || rndCoord.lat
+          , longitude: $scope.position.longitude || rndCoord.lon
           }
         , options:
           { maxZoom: 20
@@ -25,6 +63,9 @@ angular.module('gohackerApp')
       }
     )
 
+    /**
+     * Do all the things.
+     */
     navigator.geolocation.getCurrentPosition( function( position ){
       $scope.position.coords = position.coords;
       $scope.geoString = position.coords.latitude + ", " + position.coords.longitude;
@@ -40,6 +81,7 @@ angular.module('gohackerApp')
       , maximumAge: 7500
      }
     )
+
 
     /**
      * Searches a geocoder results array for the first object designated a 'locality'
@@ -85,7 +127,7 @@ angular.module('gohackerApp')
         else
           $scope.spaces = data.spaces
           for(var i = 0; i < $scope.spaces.length; i++){
-            $scope.spaces[i].icon = 'images/pin-red-solid-3.png' 
+            $scope.spaces[i].icon = 'images/pin-red-solid-3.png'
           }
       })
     }
