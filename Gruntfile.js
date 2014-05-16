@@ -92,7 +92,7 @@ module.exports = function (grunt) {
       }
     },
     exec: {
-      'api-serve': 'killall nodemon; nodemon api/server.js &'
+      'api-serve': 'nodemon api/server.js &'
     },
     // The actual grunt server settings
     connect: {
