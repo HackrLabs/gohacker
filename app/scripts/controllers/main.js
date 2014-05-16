@@ -34,10 +34,7 @@ angular.module('gohackerApp')
      * A String used in the Search params and the View input fields
      * @type {String}
      */
->>>>>>> 9e4e297623fe567ac77aa0fe8c544b4a56c2cf6f
-    $scope.geoString = "Search 4 HakrSpaces";
     $scope.spaces = [];
-
 
     /**
      * adding on some info for the map object
