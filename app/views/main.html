@@ -67,20 +67,14 @@
   control="map.control"
 >
   <marker
-    coords='position'
+    coords='{latitude: position.coords.latitude, longitude: position.coords.longitude}'
+    icon="position.icon"
   >
   </marker>
   <marker
     data-ng-repeat="space in spaces"
     coords="space.coords"
+    icon="space.icon"
   >
   </marker>
 </google-map>
-
-
-<marker id="marker-locality" coords='map.position'
-    icon='false'
-    click='map.openLocal()'
-    options='markers.local.options'
-    events='markers.local.events'>
-</marker>

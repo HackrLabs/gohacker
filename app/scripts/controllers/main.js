@@ -4,7 +4,9 @@ angular.module('gohackerApp')
   .controller('MainCtrl', function ($scope, $rootScope, Find) {
 
     $scope.position = {};
+    $scope.position.icon = 'images/pin-blue-solid-3.png'
     $scope.geoString = "Search 4 HakrSpaces";
+    $scope.spaces = [];
 
     angular.extend($scope,
       { map:
@@ -24,9 +26,9 @@ angular.module('gohackerApp')
     )
 
     navigator.geolocation.getCurrentPosition( function( position ){
-      $scope.position = position.coords;
+      $scope.position.coords = position.coords;
       $scope.geoString = position.coords.latitude + ", " + position.coords.longitude;
-      $scope.map.control.refresh( $scope.position )
+      $scope.map.control.refresh( $scope.position.coords )
       $scope.map.control.getGMap().setZoom( 11 )
     }, function( error ){
       alert('Error occurred. Error code: ' + error.code )
@@ -82,6 +84,9 @@ angular.module('gohackerApp')
           alert('No Space Found')
         else
           $scope.spaces = data.spaces
+          for(var i = 0; i < $scope.spaces.length; i++){
+            $scope.spaces[i].icon = 'images/pin-red-solid-3.png' 
+          }
       })
     }
 
